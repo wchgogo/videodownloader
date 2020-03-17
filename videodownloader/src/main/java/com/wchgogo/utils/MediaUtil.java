@@ -18,7 +18,7 @@ public class MediaUtil {
         }
 
         Properties properties = new Properties();
-        properties.load(MediaUtil.class.getResourceAsStream("/executable/ffmpeg.exe"));
+        properties.load(MediaUtil.class.getResourceAsStream("/config/config.properties"));
         String exePath = properties.getProperty("ffmpeg_exe_path");
         if (StringUtils.isEmpty(exePath) || !new File(exePath).exists()) {
             System.err.println("ffmpeg文件不存在");
