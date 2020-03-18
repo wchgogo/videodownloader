@@ -17,7 +17,7 @@ public class Meiju999 {
     public static void main(String[] args) throws Exception {
         String rootPath = "D:/Download/Videos";
         String episodeUrl = "https://www.999meiju.com/vodplay/2192-1-1.html";
-        String seasonUrl = "https://www.999meiju.com/vod/laoyoujidisanjiweishanjianban/";
+        String seasonUrl = "https://www.999meiju.com/vod/xibushijiedierji/";
         String outFormat = "mp4";
 
 //        downloadEpisode(episodeUrl, rootPath, true);
@@ -97,12 +97,14 @@ public class Meiju999 {
         String[] sources = data.split("\\$\\$\\$");
         String url2 = null;
         for (String source : sources) {
-            String[] episodes = source.split("#");
-            String episode = episodes[Integer.parseInt(episodeId) - 1];
-            String[] items = episode.split("\\$");
-            url2 = items[1];
-            if (StringUtils.isNotEmpty(url2)) {
-                break;
+            if (source.contains("kubozy")) {
+                String[] episodes = source.split("#");
+                String episode = episodes[Integer.parseInt(episodeId) - 1];
+                String[] items = episode.split("\\$");
+                url2 = items[1];
+                if (StringUtils.isNotEmpty(url2)) {
+                    break;
+                }
             }
         }
         if (StringUtils.isEmpty(url2)) {
@@ -113,7 +115,7 @@ public class Meiju999 {
         // step4
         host = UrlUtil.getProtocolHost(url2);
         html = HttpClientUtil.httpGet(url2);
-        return host + RegexUtil.find(html, "\"(.*m3u8.*)\"", 1);
+        return host + RegexUtil.find(html, "\"(.*\\.m3u8.*)\"", 1);
     }
 
     private static File getDownloadRecord(String rootPath, String seasonName) throws IOException {
